@@ -61,7 +61,7 @@ public class PaymentController {
 		
 		Map<String, Object> model = new HashMap<>();
 		model.put("status", "SUCCESS");
-		List<ServiceInstance> instances = discoveryClient.getInstances("ZUUL-SERVICE");
+		List<ServiceInstance> instances = discoveryClient.getInstances("ZUUL");
 		ServiceInstance serviceInstance = instances.get(0);
 		String baseUrl = serviceInstance.getUri().toString();
 
