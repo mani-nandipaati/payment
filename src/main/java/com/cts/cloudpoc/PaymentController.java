@@ -61,7 +61,7 @@ public class PaymentController {
 		
 		Map<String, Object> model = new HashMap<>();
 		model.put("status", "SUCCESS");
-		List<ServiceInstance> instances = discoveryClient.getInstances("account");
+		List<ServiceInstance> instances = discoveryClient.getInstances("ZUUL-SERVICE");
 		ServiceInstance serviceInstance = instances.get(0);
 		String baseUrl = serviceInstance.getUri().toString();
 
@@ -73,10 +73,13 @@ public class PaymentController {
 		
 		try{
 			String acctNumberUrl = baseUrl +"/account/number";
+			System.out.println("inside the acc numb url  --->"+acctNumberUrl);
 			UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(acctNumberUrl).
 					queryParam("accountNumber", drAccountNumber).
 					queryParam("ifscCode", drIfscCode);
+			System.out.println("inside the acc uri builder --->"+builder.toString());
 			Account drAccount=restTemplate.getForObject(builder.toUriString(), Account.class);
+			System.out.println("inside the acc uri builder --->"+drAccount.getIfscCode());
 			if(drAccount == null) {
 				model.put("status", "FAIL");
 				return model;
